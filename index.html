@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css" />
+  <title>2023/09/06</title>
+</head>
+<body>
+  
+  <!-- 로그인 양식 -->
+  <form id="frmLogin" class="hidden">
+    <input required maxlength="19" type="text" placeholder="what is your name?"/>
+    <input type="submit" value="Log In" />
+  </form>
+ 
+  <!-- 환영 메시지 -->
+  <h1 id="greeting" class="hidden"></h1>
+  <!-- 시계 표시 -->
+  <h2 id="clock"></h2>
+
+  <!-- 할 일 목록 양식 -->
+  <form id="frmTodo">
+    <input type="text" placeholder="할 일을 적고 엔터키를 누르세요" required />
+  </form>
+
+  <!-- 할 일 목록 -->
+  <ul id="lstTodo">
+  </ul>
+
+  <!-- 명언 표시 영역 -->
+  <div id="quote">
+    <span>명언</span>
+    <span>작가</span>
+  </div>
+
+  <!-- JavaScript 스크립트 파일 로드 -->
+  <script src="js/greeting.js"></script>
+  <script src="js/clock.js"></script>
+  <script src="js/quotes.js"></script>
+  <script src="js/background.js"></script>
+
+  <!-- JavaScript로 할 일 목록을 추가하는 코드 -->
+  
+  <script>
+    
+    const todoForm = document.getElementById("frmTodo");
+    const todoInput = document.querySelector("#frmTodo input");
+    const todoList = document.getElementById("lstTodo");
+
+    todoForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const todoText = todoInput.value;
+      if (todoText.trim() !== "") {
+        const li = document.createElement("li");
+        li.textContent = todoText;
+ //삭제 버튼을 추가하는  코드
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "삭제";
+        deleteButton.addEventListener("click", function() {
+          todoList.removeChild(li);
+        });
+
+        li.appendChild(deleteButton);
+
+        todoList.appendChild(li);
+        todoInput.value = ""; // 입력 필드 비우기
+      }
+    });
+     
+    
+  </script>
+  <h1>날씨 정보</h1>
+  <div id="weather"></div>
+
+  <script>
+    const API_KEY = '06811b9c147933a9209fd56e8162a8fb'; // OpenWeatherMap API 키를 여기에 입력
+    const CITY = 'Seoul'; // 날씨 정보를 가져올 도시명
+
+    const weatherDiv = document.getElementById('weather');
+
+    // OpenWeatherMap API를 사용하여 날씨 정보를 가져오는 함수
+    async function getWeather() {
+      try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=metric`);
+        const data = await response.json();
+
+        const temperature = data.main.temp;
+        const description = data.weather[0].description;
+
+        const weatherHTML = `
+          <p>도시: ${CITY}</p>
+          <p>온도: ${temperature}°C</p>
+          <p>날씨: ${description}</p>
+        `;
+
+        weatherDiv.innerHTML = weatherHTML;
+      } catch (error) {
+        console.error('날씨 정보를 가져오지 못했습니다:', error);
+      }
+    }
+
+    getWeather();
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+body {
+    background-color: beige;
+}
+
+.hidden{
+    display: none;
+}
+#quote span:first-child {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333; /* 텍스트 색상 변경 가능 */
+  }
+  
+  #quote span:last-child {
+    font-size: 18px;
+    color: #555; /* 텍스트 색상 변경 가능 */
+    
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  #quote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #quote span {
+    text-align: center;
+
+    font-family: 'Noto Sans', sans-serif;
+    /* 폰트 변경 가능 */
+  }
+  
